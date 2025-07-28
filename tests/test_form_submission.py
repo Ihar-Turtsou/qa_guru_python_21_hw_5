@@ -3,12 +3,13 @@ from selene import browser, have, be
 
 def test_form_submission(setup_browser):
     browser.open('/automation-practice-form')
-    browser.execute_script('document.querySelector("iframe").remove()')
     browser.element('[id="firstName"]').type('Carla')
     browser.element('[id="lastName"]').type('Johnson')
     browser.element('[id="userEmail"]').type('Johnson@gmail.pom')
     browser.element('//input[@name="gender" and @value="Female"]/following-sibling::label').click()
     browser.element('[id="userNumber"]').type('7788995511')
+
+    browser.execute_script('window.scrollBy(0, 500)')
 
     browser.element('[id = "dateOfBirthInput"]').click()
     browser.all('.react-datepicker__month-select option').element_by(have.exact_text('August')).click()
