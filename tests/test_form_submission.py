@@ -2,7 +2,7 @@ import os
 from selene import browser, have, be
 
 def test_form_submission(setup_browser):
-    browser.open('/')
+    browser.open('/automation-practice-form')
     browser.execute_script('document.querySelector("iframe").remove()')
     browser.element('[id="firstName"]').type('Carla')
     browser.element('[id="lastName"]').type('Johnson')
