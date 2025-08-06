@@ -1,20 +1,47 @@
-import os
 from selene import browser, have, be
+from selene.core.query import value
+
+from demo_qa_test import resource
+
+
+class RegistrationPage:
+    def open(self):
+        browser.open('/automation-practice-form')
+
+    def fill_first_name(self, value):
+        browser.element('[id="firstName"]').type(value)
+
+    def fill_last_name(self, value):
+        browser.element('[id="lastName"]').type(value)
+
+    def fill_birthday(self, month, year, day):
+        browser.element('[id = "dateOfBirthInput"]').click()
+        browser.all('.react-datepicker__month-select option').element_by(have.exact_text(month)).click()
+        browser.all('.react-datepicker__year-select option').element_by(have.exact_text(year)).click()
+        browser.element(f'[aria-label="Choose Saturday, August {day}th, 1995"]').should(be.visible).click()
+
+    def fill_email(self, email):
+        browser.element('[id="userEmail"]').type(email)
+
 
 def test_form_submission(setup_browser):
-    browser.open('/automation-practice-form')
-    browser.element('[id="firstName"]').type('Carla')
-    browser.element('[id="lastName"]').type('Johnson')
-    browser.element('[id="userEmail"]').type('Johnson@gmail.pom')
+    registration_page = RegistrationPage()
+
+    registration_page.open()
+
+    registration_page.fill_first_name('Carla')
+    registration_page.fill_last_name('Johnson')
+    registration_page.fill_email('Johnson@gmail.pom')
+
+    #registration_page.set_gender()
+
     browser.element('//input[@name="gender" and @value="Female"]/following-sibling::label').click()
     browser.element('[id="userNumber"]').type('7788995511')
 
     browser.execute_script('window.scrollBy(0, 500)')
 
-    browser.element('[id = "dateOfBirthInput"]').click()
-    browser.all('.react-datepicker__month-select option').element_by(have.exact_text('August')).click()
-    browser.all('.react-datepicker__year-select option').element_by(have.exact_text('1995')).click()
-    browser.element('[aria-label="Choose Saturday, August 5th, 1995"]').should(be.visible).click()
+    registration_page.fill_birthday('August', '1995', '5')
+
 
     browser.element('[id="subjectsInput"]').type('Maths').press_enter()
     browser.element('#subjectsInput').type('p')
@@ -22,7 +49,7 @@ def test_form_submission(setup_browser):
 
     browser.element('//*[@id="hobbiesWrapper"]//label[contains(text(),"Reading")]').click()
 
-    browser.element('[id="uploadPicture"]').send_keys(os.path.abspath('resources/Screenshot_2368.png'))
+    browser.element('[id="uploadPicture"]').send_keys(resource.path('Screenshot_2368.png'))
 
     browser.element('[id="currentAddress"]').set_value('South Street, PA, Philadelphia, 19147')
 
