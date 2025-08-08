@@ -31,26 +31,6 @@ class RegistrationPage:
         browser.execute_script('window.scrollBy(0, 500)')
         return self
 
-    def fill_first_name(self, value):
-        self.first_name.type(value)
-        return self
-
-    def fill_last_name(self, value):
-        self.last_name.type(value)
-        return self
-
-    def fill_email(self, email):
-        self.user_email.type(email)
-        return self
-
-    def set_gender(self, value):
-        self.user_gender.element(by.text(value)).click()
-        return self
-
-    def fill_phone_number(self, value):
-        self.user_phone_nuber.type(value)
-        return self
-
     def fill_birthday(self, month, year, day):
         self.date_of_birth.click()
         self.month_of_birth.element_by(have.exact_text(month)).click()
@@ -58,34 +38,14 @@ class RegistrationPage:
         self.day_of_birth.element_by(have.exact_text(str(int(day)))).click()
         return self
 
-    def set_subject_by_enter(self, value):
-        self.subject_enter.type(value).press_enter()
-        return self
-
     def set_subject_by_click(self, type_letter, value):
         self.subject_type.type(type_letter)
         self.subject_click.element_by(have.exact_text(value)).click()
         return self
 
-    def set_hobby(self, value):
-        self.user_hobby.element(by.text(value)).click()
-        return self
-
-    def upload_picture(self, value):
-        self.user_picture.send_keys(resource.path(value))
-        return self
-
-    def fill_current_address(self, value):
-        self.user_address.set_value(value)
-        return self
-
     def choose_location(self, state, city):
         self.user_state.type(state).press_enter()
         self.user_city.type(city).press_enter()
-        return self
-
-    def submit_form(self):
-        self.submit_button.click()
         return self
 
     def should_have_registered(self,user: User):
@@ -105,16 +65,16 @@ class RegistrationPage:
 
     def register(self, user: User):
         self.first_name.type(user.first_name)
-        self.fill_last_name(user.last_name)
-        self.fill_email(user.email)
-        self.set_gender(user.gender)
-        self.fill_phone_number(user.phone_number)
+        self.last_name.type(user.last_name)
+        self.user_email.type(user.email)
+        self.user_gender.element(by.text(user.gender)).click()
+        self.user_phone_nuber.type(user.phone_number)
         self.fill_birthday(*user.birthday)
-        self.set_subject_by_enter(user.first_subject)
+        self.subject_enter.type(user.first_subject).press_enter()
         self.set_subject_by_click(*user.second_subject)
-        self.set_hobby(user.hobby)
-        self.upload_picture(user.file_name)
-        self.fill_current_address(user.address)
+        self.user_hobby.element(by.text(user.hobby)).click()
+        self.user_picture.send_keys(resource.path(user.file_name))
+        self.user_address.set_value(user.address)
         self.choose_location(*user.user_location)
-        self.submit_form()
+        self.submit_button.click()
 
