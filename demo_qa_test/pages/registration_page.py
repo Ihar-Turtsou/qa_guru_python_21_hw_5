@@ -20,7 +20,7 @@ class RegistrationPage:
         browser.element('[id = "dateOfBirthInput"]').click()
         browser.all('.react-datepicker__month-select option').element_by(have.exact_text(month)).click()
         browser.all('.react-datepicker__year-select option').element_by(have.exact_text(year)).click()
-        browser.element(f'[aria-label="Choose Saturday, August {day}th, 1995"]').should(be.visible).click()
+        browser.all(f'.react-datepicker__day:not(.react-datepicker__day--outside-month)').element_by(have.exact_text(str(int(day)))).click()
         return self
 
     def fill_email(self, email):
@@ -65,18 +65,28 @@ class RegistrationPage:
         browser.element('[id="submit"]').click()
         return self
 
-    def should_registred_user_with(self, full_name, email, gender, phone_number, birthday, first_subject,
-                                   second_subject, file_name, address, state_city):
-        browser.all('tbody tr td:nth-child(2)').should(have.exact_texts(
+    def should_have_registered_user_with(self,
+                                   full_name,
+                                   email,
+                                   gender,
+                                   phone_number,
+                                   birthday,
+                                   subjects,
+                                   hobby,
+                                   file_name,
+                                   address,
+                                   state_city):
+        (browser.all('tbody tr td:nth-child(2)')
+        .should(have.exact_texts(
             full_name,
             email,
             gender,
             phone_number,
             birthday,
-            first_subject,
-            second_subject,
+            subjects,
+            hobby,
             file_name,
             address,
             state_city
-        ))
+        )))
         return self

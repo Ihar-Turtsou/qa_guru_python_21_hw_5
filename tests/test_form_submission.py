@@ -22,7 +22,7 @@ def test_form_submission(setup_browser):
     .submit_form()
     )
 
-    registration_page.should_registred_user_with(
+    registration_page.should_have_registered_user_with(
             'Carla Johnson',
             'Johnson@gmail.pom',
             'Female',
@@ -35,4 +35,4 @@ def test_form_submission(setup_browser):
             'Haryana Panipat'
                                                  )
     print('test finished')
-    # breakpoint()
+    #breakpoint()
