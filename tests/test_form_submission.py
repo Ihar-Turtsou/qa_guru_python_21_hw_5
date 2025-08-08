@@ -1,38 +1,25 @@
+from demo_qa_test.data.users import User
 from demo_qa_test.pages.registration_page import RegistrationPage
 
 
 def test_form_submission(setup_browser):
     registration_page = RegistrationPage()
+    carla = User(first_name='Carla',
+                 last_name='Johnson',
+                 email='Johnson@gmail.pom',
+                 gender="Female",
+                 phone_number='7788995511',
+                 birthday=('August', '1995', '5'),
+                 first_subject='Maths',
+                 second_subject=('p', 'Physics'),
+                 hobby="Reading",
+                 file_name='Screenshot_2368.png',
+                 address='South Street PA Philadelphia 19147',
+                 user_location=('Haryana', 'Panipat')
+                 )
 
     registration_page.open()
-    (
-    registration_page
-    .fill_first_name('Carla')
-    .fill_last_name('Johnson')
-    .fill_email('Johnson@gmail.pom')
-    .set_gender("Female")
-    .fill_phone_number('7788995511')
-    .fill_birthday('August', '1995', '5')
-    .set_subject_by_enter('Maths')
-    .set_subject_by_click('p', 'Physics')
-    .set_hobby("Reading")
-    .upload_picture('Screenshot_2368.png')
-    .fill_current_address('South Street PA Philadelphia 19147')
-    .choose_location('Haryana', 'Panipat')
-    .submit_form()
-    )
-
-    registration_page.should_registred_user_with(
-            'Carla Johnson',
-            'Johnson@gmail.pom',
-            'Female',
-            '7788995511',
-            '05 August,1995',
-            'Maths, Physics',
-            'Reading',
-            'Screenshot_2368.png',
-            'South Street PA Philadelphia 19147',
-            'Haryana Panipat'
-                                                 )
+    registration_page.register(carla)
+    registration_page.should_have_registered(carla)
     print('test finished')
     # breakpoint()
