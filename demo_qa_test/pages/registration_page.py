@@ -73,7 +73,7 @@ class RegistrationPage:
         self.subject_enter.type(user.first_subject).press_enter()
         self.set_subject_by_click(*user.second_subject)
         self.user_hobby.element(by.text(user.hobby)).click()
-        self.user_picture.send_keys(resource.path(user.file_name))
+        self.user_picture.set_value(resource.path(user.file_name))
         self.user_address.set_value(user.address)
         self.choose_location(*user.user_location)
         self.submit_button.click()
