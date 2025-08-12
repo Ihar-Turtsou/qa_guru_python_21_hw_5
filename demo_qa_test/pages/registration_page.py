@@ -49,7 +49,7 @@ class RegistrationPage:
         return self
 
     def upload_picture(self, value):
-        browser.element('[id="uploadPicture"]').send_keys(resource.path(value))
+        browser.element('[id="uploadPicture"]').set_value(resource.path(value))
         return self
 
     def fill_current_address(self, value):
