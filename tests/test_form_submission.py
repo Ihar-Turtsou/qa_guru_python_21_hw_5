@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 from selene import browser, have, be
 
 def test_form_submission(setup_browser):
@@ -22,7 +22,8 @@ def test_form_submission(setup_browser):
 
     browser.element('//*[@id="hobbiesWrapper"]//label[contains(text(),"Reading")]').click()
 
-    browser.element('[id="uploadPicture"]').send_keys(os.path.abspath('resources/Screenshot_2368.png'))
+    browser.element('[id="uploadPicture"]').set_value(
+        str((Path(__file__).parent / 'resources' / 'Screenshot_2368.png').absolute()))
 
     browser.element('[id="currentAddress"]').set_value('South Street, PA, Philadelphia, 19147')
 
