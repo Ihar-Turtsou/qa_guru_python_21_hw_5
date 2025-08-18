@@ -15,6 +15,8 @@ def test_form_submission(setup_browser):
     browser.all('.react-datepicker__year-select option').element_by(have.exact_text('1995')).click()
     browser.all(f'.react-datepicker__day:not(.react-datepicker__day--outside-month)').element_by(have.exact_text(str(int('5')))).click()
 
+    browser.execute_script('window.scrollBy(0, 550)')
+
     browser.element('[id="subjectsInput"]').type('Maths').press_enter()
     browser.element('#subjectsInput').type('p')
     browser.all('.subjects-auto-complete__menu div').element_by(have.exact_text('Physics')).click()
