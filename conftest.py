@@ -25,7 +25,8 @@ def remote_browser_setup():
         "browserVersion": "128.0",
         "selenoid:options": {
             "enableVNC": True,
-            "enableVideo": True
+            "enableVideo": True,
+            "sessionTimeout": "1m"
         }
     }
     options.capabilities.update(selenoid_capabilities)
