@@ -5,6 +5,7 @@ from selenium.common.exceptions import InvalidSessionIdException, WebDriverExcep
 from dotenv import load_dotenv
 import os
 from selene import browser
+from utils import attach
 
 @pytest.fixture(scope="session", autouse=True)
 def load_env():
@@ -34,6 +35,7 @@ def remote_browser_setup():
 
     browser.config.driver = driver
     yield browser
+    attach.add_video(browser)
     try:
         browser.quit()
     except (InvalidSessionIdException, WebDriverException):
