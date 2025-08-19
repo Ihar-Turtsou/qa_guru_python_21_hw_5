@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import InvalidSessionIdException, WebDriverException
 from dotenv import load_dotenv
 import os
 from selene import browser
@@ -31,4 +32,7 @@ def remote_browser_setup():
 
     browser.config.driver = driver
     yield browser
-    browser.quit()
+    try:
+        browser.quit()
+    except (InvalidSessionIdException, WebDriverException):
+        pass
