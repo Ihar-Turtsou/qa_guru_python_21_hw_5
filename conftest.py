@@ -37,12 +37,28 @@ def remote_browser_setup():
     browser.config.driver = driver
     yield browser
 
-    attach.add_video(browser)
-    attach.add_html(browser)
-    attach.add_screenshot(browser)
-    attach.add_logs(browser)
-
     try:
-        browser.quit()
-    except (InvalidSessionIdException, WebDriverException):
-        pass
+        try:
+            attach.add_html(browser)
+        except Exception:
+            pass
+
+        try:
+            attach.add_screenshot(browser)
+        except Exception:
+            pass
+
+        try:
+            attach.add_logs(browser)
+        except Exception:
+            pass
+
+        try:
+            attach.add_video(browser)
+        except Exception:
+            pass
+    finally:
+        try:
+            browser.quit()
+        except (InvalidSessionIdException, WebDriverException):
+            pass
