@@ -1,0 +1,36 @@
+import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from dotenv import load_dotenv
+import os
+from selene import browser
+
+@pytest.fixture(scope="session", autouse=True)
+def load_env():
+    load_dotenv()
+
+
+
+@pytest.fixture(scope="function")
+def remote_browser_setup():
+
+    selenoid_login = os.getenv("SELENOID_LOGIN")
+    selenoid_pass = os.getenv("SELENOID_PASS")
+    selenoid_url = os.getenv("SELENOID_URL")
+
+    options = Options()
+    selenoid_capabilities = {
+        "browserName": "chrome",
+        "browserVersion": "128.0",
+        "selenoid:options": {
+            "enableVideo": False
+        }
+    }
+    options.capabilities.update(selenoid_capabilities)
+    driver = webdriver.Remote(
+        command_executor=f"https://{selenoid_login}:{selenoid_pass}@{selenoid_url}/wd/hub",
+        options=options)
+
+    browser.config.driver = driver
+    yield browser
+    browser.quit()

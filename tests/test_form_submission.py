@@ -1,40 +1,51 @@
 from pathlib import Path
+
+import allure
 from selene import browser, have, be, by
 
+from utils.attach import add_screenshot, add_logs, add_html
+
+
 def test_form_submission(setup_browser):
-    browser.open('/automation-practice-form')
-    browser.execute_script('window.scrollBy(0, 550)')
-    browser.element('[id="firstName"]').type('Carla')
-    browser.element('[id="lastName"]').type('Johnson')
-    browser.element('[id="userEmail"]').type('Johnson@gmail.pom')
-    browser.element('#genterWrapper').element(by.text('Female')).click()
-    browser.element('[id="userNumber"]').type('7788995511')
 
-    browser.element('[id = "dateOfBirthInput"]').click()
-    browser.all('.react-datepicker__month-select option').element_by(have.exact_text('August')).click()
-    browser.all('.react-datepicker__year-select option').element_by(have.exact_text('1995')).click()
-    browser.all(f'.react-datepicker__day:not(.react-datepicker__day--outside-month)').element_by(have.exact_text(str(int('5')))).click()
+    with allure.step('Open registration form'):
+        browser.open('/automation-practice-form')
+        browser.execute_script('window.scrollBy(0, 550)')
 
-    browser.execute_script('window.scrollBy(0, 550)')
+    with allure.step('Fill form'):
+        browser.element('[id="firstName"]').type('Carla')
+        browser.element('[id="lastName"]').type('Johnson')
+        browser.element('[id="userEmail"]').type('Johnson@gmail.pom')
+        browser.element('#genterWrapper').element(by.text('Female')).click()
+        browser.element('[id="userNumber"]').type('7788995511')
 
-    browser.element('[id="subjectsInput"]').type('Maths').press_enter()
-    browser.element('#subjectsInput').type('p')
-    browser.all('.subjects-auto-complete__menu div').element_by(have.exact_text('Physics')).click()
+        browser.element('[id = "dateOfBirthInput"]').click()
+        browser.all('.react-datepicker__month-select option').element_by(have.exact_text('August')).click()
+        browser.all('.react-datepicker__year-select option').element_by(have.exact_text('1995')).click()
+        browser.all(f'.react-datepicker__day:not(.react-datepicker__day--outside-month)').element_by(have.exact_text(str(int('5')))).click()
 
-    browser.element('#hobbiesWrapper').element(by.text('Reading')).click()
+        browser.execute_script('window.scrollBy(0, 550)')
 
-    browser.element('[id="uploadPicture"]').set_value(
+        browser.element('[id="subjectsInput"]').type('Maths').press_enter()
+        browser.element('#subjectsInput').type('p')
+        browser.all('.subjects-auto-complete__menu div').element_by(have.exact_text('Physics')).click()
+
+        browser.element('#hobbiesWrapper').element(by.text('Reading')).click()
+
+        browser.element('[id="uploadPicture"]').set_value(
         str((Path(__file__).parent / 'resources' / 'Screenshot_2368.png').absolute()))
 
-    browser.element('[id="currentAddress"]').set_value('South Street, PA, Philadelphia, 19147')
+        browser.element('[id="currentAddress"]').set_value('South Street, PA, Philadelphia, 19147')
 
-    browser.element('#state input').type('Haryana').press_enter()
-    browser.element('#city input').type('Panipat').press_enter()
+        browser.element('#state input').type('Haryana').press_enter()
+        browser.element('#city input').type('Panipat').press_enter()
 
-    browser.element('[id="submit"]').click()
+        browser.element('[id="submit"]').click()
+        add_logs(browser)
 
-    browser.element('.table-responsive').all('tr').should(
-        have.exact_texts(
+    with allure.step('Check form results'):
+        browser.element('.table-responsive').all('tr').should(
+            have.exact_texts(
             'Label Values',
             'Student Name Carla Johnson',
             'Student Email Johnson@gmail.pom',
@@ -48,5 +59,8 @@ def test_form_submission(setup_browser):
             'State and City Haryana Panipat',
         )
     )
+        add_html(browser)
+        add_logs(browser)
+        add_screenshot(browser)
     print('test finished')
     # breakpoint()
