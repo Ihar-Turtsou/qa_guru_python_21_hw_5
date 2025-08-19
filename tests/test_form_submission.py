@@ -41,7 +41,7 @@ def test_form_submission(setup_browser):
         browser.element('#city input').type('Panipat').press_enter()
 
         browser.element('[id="submit"]').click()
-        add_logs(browser)
+
 
     with allure.step('Check form results'):
         browser.element('.table-responsive').all('tr').should(
