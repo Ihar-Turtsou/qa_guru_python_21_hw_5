@@ -1,9 +1,7 @@
 from pathlib import Path
 
 import allure
-from selene import browser, have, be, by
-
-from utils.attach import add_screenshot, add_logs, add_html
+from selene import browser, have, by
 
 
 def test_form_submission(setup_browser):
@@ -41,7 +39,6 @@ def test_form_submission(setup_browser):
         browser.element('#city input').type('Panipat').press_enter()
 
         browser.element('[id="submit"]').click()
-        add_logs(browser)
 
     with allure.step('Check form results'):
         browser.element('.table-responsive').all('tr').should(
@@ -59,9 +56,6 @@ def test_form_submission(setup_browser):
             'State and City Haryana Panipat',
         )
     )
-    add_html(browser)
-    add_screenshot(browser)
-    add_logs(browser)
 
     print('test finished')
     # breakpoint()
