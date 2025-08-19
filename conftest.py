@@ -7,12 +7,7 @@ from selene import browser
 
 @pytest.fixture(scope="session", autouse=True)
 def load_env():
-    path = os.path.join(os.getcwd(), ".env")
-    load_dotenv(path)
-    required = ["SELENOID_LOGIN", "SELENOID_PASS", "SELENOID_URL"]
-    missing = [k for k in required if not os.getenv(k)]
-    assert not missing, f"Missing env vars: {missing}  (pwd={os.getcwd()}, env_path={path})"
-
+    load_dotenv()
 
 @pytest.fixture(scope="function")
 def remote_browser_setup():

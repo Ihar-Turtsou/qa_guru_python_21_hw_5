@@ -60,7 +60,6 @@ def test_form_submission(setup_browser):
         )
     )
         add_html(browser)
-        add_logs(browser)
         add_screenshot(browser)
     print('test finished')
     # breakpoint()
