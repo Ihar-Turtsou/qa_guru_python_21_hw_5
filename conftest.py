@@ -18,11 +18,13 @@ def remote_browser_setup():
     selenoid_url = os.getenv("SELENOID_URL")
 
     options = Options()
+    options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
     selenoid_capabilities = {
         "browserName": "chrome",
         "browserVersion": "128.0",
         "selenoid:options": {
-            "enableVideo": False
+            "enableVNC": True,
+            "enableVideo": True
         }
     }
     options.capabilities.update(selenoid_capabilities)
