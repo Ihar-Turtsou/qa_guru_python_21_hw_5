@@ -8,4 +8,3 @@ def setup_browser(remote_browser_setup):
     browser.config.window_width = 1920
     browser.config.window_height = 1080
     yield
-    browser.quit()
