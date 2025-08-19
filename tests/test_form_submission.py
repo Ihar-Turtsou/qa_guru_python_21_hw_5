@@ -3,7 +3,7 @@ from pathlib import Path
 import allure
 from selene import browser, have, be, by
 
-from utils.attach import add_screenshot, add_logs, add_html
+from utils.attach import add_screenshot, add_logs, add_html, add_video
 
 
 def test_form_submission(setup_browser):
@@ -59,8 +59,10 @@ def test_form_submission(setup_browser):
             'State and City Haryana Panipat',
         )
     )
-        add_logs(browser)
+
         add_html(browser)
         add_screenshot(browser)
+        add_logs(browser)
+        add_video(browser)
     print('test finished')
     # breakpoint()
