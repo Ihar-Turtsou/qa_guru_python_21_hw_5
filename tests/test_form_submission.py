@@ -59,10 +59,10 @@ def test_form_submission(setup_browser):
             'State and City Haryana Panipat',
         )
     )
+    add_video(browser)
+    add_html(browser)
+    add_screenshot(browser)
+    add_logs(browser)
 
-        add_html(browser)
-        add_screenshot(browser)
-        add_logs(browser)
-        add_video(browser)
     print('test finished')
     # breakpoint()
