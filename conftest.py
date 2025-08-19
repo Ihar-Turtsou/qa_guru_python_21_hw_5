@@ -25,8 +25,8 @@ def remote_browser_setup():
         "browserVersion": "128.0",
         "selenoid:options": {
             "enableVNC": True,
-            "enableVideo": True,
-            "sessionTimeout": "1m"
+            "enableVideo": True
+
         }
     }
     options.capabilities.update(selenoid_capabilities)
@@ -38,27 +38,6 @@ def remote_browser_setup():
     yield browser
 
     try:
-        try:
-            attach.add_html(browser)
-        except Exception:
-            pass
-
-        try:
-            attach.add_screenshot(browser)
-        except Exception:
-            pass
-
-        try:
-            attach.add_logs(browser)
-        except Exception:
-            pass
-
-        try:
-            attach.add_video(browser)
-        except Exception:
-            pass
-    finally:
-        try:
-            browser.quit()
-        except (InvalidSessionIdException, WebDriverException):
-            pass
+        browser.quit()
+    except (InvalidSessionIdException, WebDriverException):
+        pass
