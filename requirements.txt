@@ -4,4 +4,4 @@ allure-pytest
 python-dotenv
 
 allure-python-commons~=2.15.0
-selenium~=4.34.2
+selenium==4.11.2
